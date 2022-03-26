@@ -8,3 +8,6 @@ Personal projects to test new features in swift
 -Create tables to list information    
 -Decouple storyboard views with xib     
 -Learn the Delegate design pattern
+-Alerts
+-Gestures
+-Closures
