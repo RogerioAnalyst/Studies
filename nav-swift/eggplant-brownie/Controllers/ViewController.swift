@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     //MARK: IBOutlet
     
-    @IBOutlet weak var itensTableView: UITableView!
+    @IBOutlet weak var itensTableView: UITableView?
     
     //MARK: Atributos
     
@@ -49,7 +49,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func add(_ item: Item) {
         itens.append(item)
-        itensTableView.reloadData()
+        itensTableView?.reloadData()
+        
+        if let tableView = itensTableView {
+            tableView.reloadData()
+        } else {
+            let alert = UIAlertController(title: "Perdão", message: "Não foi possível adicionar um item a tabela.", preferredStyle: .alert)
+            let okaction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+            present(alert, animated: true)
+            alert.addAction(okaction)
+        }
     }
     
     //MARK: UITableViewDataSource
