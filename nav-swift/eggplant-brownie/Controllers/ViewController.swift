@@ -93,19 +93,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func recuperaRefeicaoDoFormulario() -> Refeicao? {
         guard let nomeDaRefeicao = nomeTextField?.text else {
-            Alerta(controller: self).exibe(titulo: "Error", mensagem: "Erro ao ler o campo nome.")
             return nil
         }
-        
         guard let felicidadeDaRefeicao = felicidadeTextField?.text, let felicidade = Int(felicidadeDaRefeicao) else {
-            Alerta(controller: self).exibe(mensagem: "Erro ao ler o campo felicidade")
             return nil
         }
         
         let refeicao = Refeicao(nome: nomeDaRefeicao, felicidade: felicidade, itens: itensSelecionados)
-        
         refeicao.itens = itensSelecionados
-        
         return refeicao
     }
     
@@ -113,7 +108,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func adicionar(_ sender: Any) {
             
-        guard let refeicao = recuperaRefeicaoDoFormulario() else { return }
+        guard let refeicao = recuperaRefeicaoDoFormulario() else { return Alerta(controller: self).exibe(mensagem: "Erro ao ler dados do formulário") }
         
         delegate?.add(refeicao)
         navigationController?.popViewController(animated: true)
