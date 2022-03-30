@@ -2,8 +2,8 @@
 //  RemoveRefeicaoViewController.swift
 //  eggplant-brownie
 //
-//  Created by Usemobile PT000039 on 29/03/22.
-//  Copyright © 2022 Alura. All rights reserved.
+//  Created by Alura on 24/08/19.
+//  Copyright © 2019 Alura. All rights reserved.
 //
 
 import UIKit
@@ -18,13 +18,13 @@ class RemoveRefeicaoViewController {
     
     func exibe(_ refeicao: Refeicao, handler: @escaping (UIAlertAction) -> Void) {
         let alerta = UIAlertController(title: refeicao.nome, message: refeicao.detalhes(), preferredStyle: .alert)
+        let botaoCancelar = UIAlertAction(title: "cancelar", style: .cancel)
+        alerta.addAction(botaoCancelar)
+        let botaoRemover = UIAlertAction(title: "remover", style: .destructive, handler: handler)
         
-        let botaocancelar = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alerta.addAction(botaocancelar)
-
-        let botaoRemover = UIAlertAction(title: "Remover", style: .destructive, handler: handler)
         alerta.addAction(botaoRemover)
         
-        controller.present(alerta, animated: true)
+        controller.present(alerta, animated: true, completion: nil)
     }
+    
 }

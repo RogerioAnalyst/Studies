@@ -2,54 +2,54 @@
 //  AdicionarItensViewController.swift
 //  eggplant-brownie
 //
-//  Created by Usemobile PT000039 on 17/03/22.
-//  Copyright © 2022 Alura. All rights reserved.
+//  Created by Alura on 03/06/19.
+//  Copyright © 2019 Alura. All rights reserved.
 //
 
 import UIKit
 
-protocol AdicionarItensDelegate {
+protocol AdicionaItensDelegate {
     func add(_ item: Item)
 }
 
 class AdicionarItensViewController: UIViewController {
-
-    //MARK: IBOutlets
     
-    @IBOutlet weak var textFieldNome: UITextField!
-    @IBOutlet weak var textFieldCalorias: UITextField!
+    // MARK: - IBOutlets
     
-    //MARK: Atributos
+    @IBOutlet weak var nomeTextField: UITextField!
+    @IBOutlet weak var caloriasTextField: UITextField!
     
-    var delegate: AdicionarItensDelegate?
+    // MARK: - Atributos
     
-    init(delegate: AdicionarItensDelegate) {
+    var delegate: AdicionaItensDelegate?
+    
+    init(delegate: AdicionaItensDelegate) {
         super.init(nibName: "AdicionarItensViewController", bundle: nil)
         self.delegate = delegate
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
-    //MARK: View life cycle
-    
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    //MARK: IBAction
+    // MARK: - IBAction
     
     @IBAction func adicionarItem(_ sender: Any) {
+        guard let nome = nomeTextField.text, let calorias = caloriasTextField.text else {
+            return
+        }
         
-        guard let nome = textFieldNome.text, let calorias = textFieldCalorias.text else { return }
-        
-        guard let numeroDeCalorias = Double(calorias) else { return }
-        
-        let item = Item(nome: nome, calorias: numeroDeCalorias)
-        
-        delegate?.add(item)
-        
-        self.navigationController?.popViewController(animated: true)
+        if let numeroDeCalorias = Double(calorias) {
+            let item = Item(nome: nome, calorias: numeroDeCalorias)
+            
+            delegate?.add(item)
+            navigationController?.popViewController(animated: true)
+        }
     }
 }
