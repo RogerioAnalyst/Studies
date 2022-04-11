@@ -32,9 +32,11 @@ class CarsTableViewController: UITableViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "viewSegue" {
+            let vc = segue.destination as! CarViewController
+            vc.car = cars[tableView.indexPathForSelectedRow!.row]
+        }
     }
 
     // MARK: - Table view data source
@@ -53,5 +55,23 @@ class CarsTableViewController: UITableViewController {
         cell.detailTextLabel?.text = car.brand
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            let car = cars[indexPath.row]
+            
+            REST.delete(car: car) { (success) in
+                if success {
+                    //tem que remover também do nosso item chamando ele aqui e nao chamando o tableView.deleteRows
+                    self.cars.remove(at: indexPath.row)
+                    
+                    DispatchQueue.main.async {
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
+                }
+            }
+        }
     }
 }
